@@ -65,7 +65,7 @@ def generate(
         clip.to(idle_device)
         if sampler_name == "ddpm":
             sampler = DDPMSampler(generator)
-            sampler.set_inference_steps(n_inference_steps)
+            sampler.set_inference_timesteps(n_inference_steps)
         else:
             raise ValueError(f"Sampler {sampler_name} not found")
         latents_shape = (1, 4, LATENTS_HEIGHT, LATENTS_WIDTH)
