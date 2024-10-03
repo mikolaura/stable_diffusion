@@ -12,7 +12,7 @@ class CLIPEmbedding(nn.Module):
 
     def forward(self, tokens: torch.LongTensor) -> torch.FloatTensor:
         x = self.token_embedding(tokens)
-        x += self.position_embedding(x)
+        x += self.position_embedding
         return x
 
 
