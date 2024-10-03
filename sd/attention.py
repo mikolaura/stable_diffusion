@@ -65,7 +65,7 @@ class SelfAttention(nn.Module):
 
         weight = q @ k.transpose(-1, -2)
 
-        if causal_mask is not None:
+        if causal_mask:
             mask = torch.ones_like(weight, dtype=torch.bool).triu(1)
             weight.masked_fill_(mask, -torch.inf)
 
