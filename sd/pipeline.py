@@ -62,7 +62,7 @@ def generate(
             ).input_ids
             tokens = torch.tensor(tokens, dtype=torch.long, device=device)
             context = clip(tokens)
-        to_idle(clip)
+        clip.to(idle_device)
         if sampler_name == "ddpm":
             sampler = DDPMSampler(generator)
             sampler.set_inference_steps(n_inference_steps)
@@ -85,7 +85,7 @@ def generate(
             sampler.set_strength(strength=strength)
             latents = sampler.add_noise(latents, sampler.timesteps[0])
 
-            to_idle(encoder)
+            encoder.to(idle_device)
         else:
             latents = torch.randn(latents_shape, generator=generator, device=device)
         diffusion = models["diffusion"]
@@ -106,7 +106,7 @@ def generate(
                 model_output = cfg_scale * (output_cond - output_uncond) + output_uncond
 
             latents = sampler.step(timestep, latents, model_output)
-        to_idle(diffusion)
+        diffusion.to(idle_device)
         decoder = models["decoder"]
         decoder.to(device)
         images = decoder(latents)
