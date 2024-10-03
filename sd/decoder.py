@@ -1,14 +1,14 @@
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-from sd.attention import SelfAttention
+from attention import SelfAttention
 
 
 class VAE_AttentionBlock(nn.Module):
     def __init__(self, channels: int):
         super().__init__()
         self.groupnorm = nn.GroupNorm(32, channels)
-        self.attention = SelfAttention(channels)
+        self.attention = SelfAttention(1, channels)
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
         residue = x
